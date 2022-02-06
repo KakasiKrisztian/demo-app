@@ -1,5 +1,8 @@
-package com.example.demo.student;
+package com.example.demo.student.web;
 
+import com.example.demo.student.domain.Student;
+import com.example.demo.student.service.StudentService;
+import com.example.demo.student.transfer.UpdateStudentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +26,27 @@ public class StudentController {
         return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
     }
 
+    @GetMapping("/{studentIdGet}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long studentIdGet){
+        return new ResponseEntity<>(studentService.getStudentById(studentIdGet), HttpStatus.OK);
+    }
+
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student){
+    public ResponseEntity<Student> registerNewStudent(@RequestBody Student student){
         studentService.addNewStudent(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "{studentId}")
-    public void deleteStudent(@PathVariable("studentId") Long id){
+    public ResponseEntity deleteStudent(@PathVariable("studentId") Long id){
         studentService.deleteStudent(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteStudents(){
+        studentService.deleteStudents();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
@@ -44,7 +60,7 @@ public class StudentController {
             @PathVariable Long id2,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email){
-        Student student = studentService.updateStudent(id2, name, email);
+        Student student = studentService.updateStudentWithNameAndEmail(id2, name, email);
         System.out.println(name + email);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }

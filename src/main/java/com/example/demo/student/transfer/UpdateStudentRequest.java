@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.student.transfer;
 
 import com.sun.istack.NotNull;
 

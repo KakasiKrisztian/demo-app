@@ -1,8 +1,10 @@
-package com.example.demo.student;
+package com.example.demo.student.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -21,6 +23,10 @@ public class Student {
     private String name;
     private String email;
     private LocalDate dob;
+
+    @ManyToMany(mappedBy = "students")
+    private Set<EnrollList> enrollLists = new HashSet<>();
+
     @Transient
     private Integer age;
 
@@ -78,6 +84,14 @@ public class Student {
 
     public void setDob(LocalDate dov) {
         this.dob = dov;
+    }
+
+    public Set<EnrollList> getEnrollLists() {
+        return enrollLists;
+    }
+
+    public void setEnrollList(Set<EnrollList> enrollLists) {
+        this.enrollLists = enrollLists;
     }
 
     @Override
