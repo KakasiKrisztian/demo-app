@@ -64,4 +64,5 @@ public class StudentController {
         System.out.println(name + email);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
+
 }

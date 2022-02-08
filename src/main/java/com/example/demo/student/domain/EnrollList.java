@@ -41,7 +41,7 @@ public class EnrollList {
 
     }
 
-    public void removeFromCart(Student student) {
+    public void removeFromStudents(Student student) {
         students.remove(student);
 
         student.getEnrollLists().remove(this);

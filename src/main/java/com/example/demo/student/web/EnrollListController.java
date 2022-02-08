@@ -2,7 +2,8 @@ package com.example.demo.student.web;
 
 import com.example.demo.student.domain.EnrollList;
 import com.example.demo.student.service.EnrollListService;
-import com.example.demo.student.transfer.AddProductToCartRequest;
+import com.example.demo.student.transfer.AddStudentToEnrollListRequest;
+import com.example.demo.student.transfer.UpdateEnrollListRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -38,14 +38,30 @@ public class EnrollListController {
     public ResponseEntity<EnrollList> addNewEnrollList(@RequestParam String name,
                                                        @RequestParam String description){
         return new ResponseEntity<>(enrollListService.addNewEnrollList(name, description), HttpStatus.OK);
-
     }
 
-    @PutMapping
-    public ResponseEntity addProductToCart(@RequestBody AddProductToCartRequest request){
-        enrollListService.addProductToCart(request);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    @PutMapping("/{enrollListId}")
+    public ResponseEntity<EnrollList> updateEnrollList(@RequestBody UpdateEnrollListRequest request, Long enrollListId){
+        EnrollList enrollListUpdated = enrollListService.updateEnrollList(request, enrollListId);
+        return new ResponseEntity(enrollListUpdated, HttpStatus.OK);
+    }
 
+    @PutMapping(value = "/EnrollList/AddStudentToList")
+    public ResponseEntity addStudentToEnrollList(@RequestBody AddStudentToEnrollListRequest request){
+        enrollListService.addStudentToEnrollList(request);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping
+    public ResponseEntity deleteAllEnrollLists(){
+        enrollListService.deleteAllEnrollLists();
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping(value = "/EnrollList", params = "name")
+    public ResponseEntity deleteEnrollListByName(@RequestParam String name){
+        enrollListService.deleteEnrollListByName(name);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

@@ -10,4 +10,8 @@ import java.util.Optional;
 
 public interface EnrollListRepository extends JpaRepository<EnrollList, Long> {
     Page<EnrollList> findAllByListName(String listName, Pageable pageable);
+
+    EnrollList findByListName(String listName);
+
+    void deleteAllByListName(String name);
 }

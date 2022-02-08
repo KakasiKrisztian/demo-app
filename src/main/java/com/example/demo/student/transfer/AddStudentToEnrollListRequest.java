@@ -1,10 +1,10 @@
 package com.example.demo.student.transfer;
 
-public class AddProductToCartRequest {
+public class AddStudentToEnrollListRequest {
     private long studentId;
     private long enrollListId;
 
-    public AddProductToCartRequest(long studentId, long enrollListId) {
+    public AddStudentToEnrollListRequest(long studentId, long enrollListId) {
         this.studentId = studentId;
         this.enrollListId = enrollListId;
     }
